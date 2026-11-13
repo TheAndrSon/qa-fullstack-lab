@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Вход — ShopSphere{% endblock %}
+{% block content %}
+<section class="auth">
+  <h1>Вход</h1>
+  <form method="post" action="/login" class="stack">
+    <label>Email <input type="email" name="email" required autocomplete="username"></label>
+    <label>Пароль <input type="password" name="password" required autocomplete="current-password"></label>
+    <button type="submit">Войти</button>
+  </form>
+  <p class="muted">Нет аккаунта? <a href="/register">Зарегистрироваться</a></p>
+  <div class="hint">
+    <strong>Тестовые пользователи</strong>
+    <div>alice@example.com / User123!</div>
+    <div>admin@shopsphere.local / Admin123!</div>
+  </div>
+</section>
+{% endblock %}

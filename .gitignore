@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+apps/shopsphere/data/*.db
+tests/java/target/
+playwright-report/
+test-results/
+.env
+*.log

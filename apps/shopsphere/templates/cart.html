@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Корзина — ShopSphere{% endblock %}
+{% block content %}
+<h1>Корзина</h1>
+{% if items %}
+<table class="table">
+  <thead><tr><th>Товар</th><th>Цена</th><th>Кол-во</th><th>Итого</th><th></th></tr></thead>
+  <tbody>
+  {% for item in items %}
+    <tr>
+      <td><span class="emoji-sm">{{ item.emoji }}</span> {{ item.title }}</td>
+      <td>${{ '%.2f'|format(item.price) }}</td>
+      <td>
+        <form method="post" action="/cart/update" class="inline">
+          <input type="hidden" name="product_id" value="{{ item.id }}">
+          <input type="number" name="qty" value="{{ item.qty }}" class="qty">
+          <button type="submit">Обновить</button>
+        </form>
+      </td>
+      <td>${{ '%.2f'|format(item.line_total) }}</td>
+      <td>
+        <form method="post" action="/cart/remove" class="inline">
+          <input type="hidden" name="product_id" value="{{ item.id }}">
+          <button class="ghost" type="submit">Удалить</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<div class="total">
+  <span>Итого:</span>
+  <strong>${{ '%.2f'|format(total) }}</strong>
+</div>
+<div class="actions">
+  <a class="button ghost" href="/">Продолжить покупки</a>
+  <a class="button" href="/checkout">Оформить заказ</a>
+</div>
+{% else %}
+<p>Корзина пуста. <a href="/">Перейти в каталог</a>.</p>
+{% endif %}
+{% endblock %}

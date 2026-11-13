@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Регистрация — ShopSphere{% endblock %}
+{% block content %}
+<section class="auth">
+  <h1>Регистрация</h1>
+  <form method="post" action="/register" class="stack">
+    <label>Имя <input type="text" name="name" placeholder="Как к вам обращаться"></label>
+    <label>Email <input type="email" name="email" required autocomplete="username"></label>
+    <label>Пароль <input type="password" name="password" required minlength="6" autocomplete="new-password"></label>
+    <button type="submit">Создать аккаунт</button>
+  </form>
+  <p class="muted">Уже есть аккаунт? <a href="/login">Войти</a></p>
+</section>
+{% endblock %}

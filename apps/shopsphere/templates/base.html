@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}ShopSphere{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="logo" href="/">Shop<span>Sphere</span></a>
+  <nav>
+    <a href="/">Каталог</a>
+    <a href="/cart">Корзина</a>
+    {% if user %}
+      <a href="/orders">Заказы</a>
+      {% if user.role == 'admin' %}<a href="/admin">Админка</a>{% endif %}
+      <span class="user">{{ user.name }}</span>
+      <a href="/logout">Выйти</a>
+    {% else %}
+      <a href="/login">Войти</a>
+      <a class="accent" href="/register">Регистрация</a>
+    {% endif %}
+  </nav>
+</header>
+<main class="container">
+  {% if request.query_params.get('error') %}<div class="alert error">{{ request.query_params.get('error') }}</div>{% endif %}
+  {% if request.query_params.get('msg') %}<div class="alert ok">{{ request.query_params.get('msg') }}</div>{% endif %}
+  {% block content %}{% endblock %}
+</main>
+<footer>ShopSphere — учебный проект. Не используйте реальные данные и пароли.</footer>
+</body>
+</html>

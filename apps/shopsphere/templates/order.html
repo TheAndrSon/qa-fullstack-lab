@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Заказ #{{ order.id }} — ShopSphere{% endblock %}
+{% block content %}
+<a class="back" href="/orders">← Мои заказы</a>
+<h1>Заказ #{{ order.id }}</h1>
+<p class="muted">Покупатель: {{ order.user_email }} · {{ order.created_at }} · статус: {{ order.status }}</p>
+<table class="table">
+  <thead><tr><th>Товар</th><th>Кол-во</th><th>Цена</th><th>Сумма</th></tr></thead>
+  <tbody>
+  {% for item in items %}
+    <tr>
+      <td>{{ item.emoji }} {{ item.title }}</td>
+      <td>{{ item.qty }}</td>
+      <td>${{ '%.2f'|format(item.price) }}</td>
+      <td>${{ '%.2f'|format(item.price * item.qty) }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<div class="total"><span>Итого:</span><strong>${{ '%.2f'|format(order.total) }}</strong></div>
+{% endblock %}

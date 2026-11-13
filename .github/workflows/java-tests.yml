@@ -1,0 +1,36 @@
+name: Java tests
+
+on:
+  push:
+    branches: [main, develop, "feature/**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  maven:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Start ShopSphere and run Maven tests
+        run: |
+          nohup uvicorn apps.shopsphere.main:app --port 8000 > uvicorn.log 2>&1 &
+          for i in {1..30}; do
+            curl -fsS http://127.0.0.1:8000/health && break
+            sleep 1
+          done
+          mvn -q -f tests/java/pom.xml test

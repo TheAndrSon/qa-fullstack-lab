@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ product.title }} — ShopSphere{% endblock %}
+{% block content %}
+<a class="back" href="/">← Назад в каталог</a>
+<section class="product">
+  <div class="product-emoji">{{ product.emoji }}</div>
+  <div class="product-info">
+    <span class="chip">{{ product.category }}</span>
+    <h1>{{ product.title }}</h1>
+    <p>{{ product.description }}</p>
+    <p class="price">${{ '%.2f'|format(product.price) }}</p>
+    <p class="muted">В наличии: {{ product.stock }}</p>
+    <form method="post" action="/cart/add" class="inline">
+      <input type="hidden" name="product_id" value="{{ product.id }}">
+      <label>Количество <input type="number" name="qty" value="1"></label>
+      <button type="submit">В корзину</button>
+    </form>
+  </div>
+</section>
+{% endblock %}
