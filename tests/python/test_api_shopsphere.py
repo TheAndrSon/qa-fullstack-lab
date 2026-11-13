@@ -125,3 +125,11 @@ def test_pages_render(client):
     admin = client.get("/admin")
     assert admin.status_code == 200
     assert "Админка" in admin.text
+
+
+def test_filter_by_category(client):
+    response = client.get("/api/products", params={"category": "Audio"})
+    assert response.status_code == 200
+    items = response.json()["items"]
+    assert items
+    assert all(item["category"] == "Audio" for item in items)
